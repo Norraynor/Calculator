@@ -1,0 +1,104 @@
+#main-calc-body{
+    width: 300px;
+    height: 450px;
+    background-color:lightblue;
+    text-align: center;
+    margin: 0 auto;
+}
+#display{
+    display: flex;
+    box-sizing: border-box;
+    width:100%;
+    height: 20%;
+    background-color: silver;
+    justify-content: end;
+    align-content: center;
+    margin: 5px 0;
+    border-style: solid;
+    border-width: 2px;
+}
+#container{
+    margin: 2.5% 2.5%;
+    padding: 1px;
+    width: 95%;
+    height: 95%;
+}
+#display-value{
+    font-size: 4em;
+    margin: 0;
+}
+#buttons-container{
+    grid-area:buttons-container;
+    display: grid;
+    box-sizing: border-box;
+    grid-template-columns: 20% 20% 20% 20%;
+    grid-template-rows: 15% 15% 15% 15% 15%;
+    row-gap: 5%;
+    column-gap: 5%;
+    justify-items: stretch;
+    align-items: stretch;
+
+    grid-template-areas: 
+    "clear clear del div"
+    "number-7 number-8 number-9 mult"
+    "number-4 number-5 number-6 sub"
+    "number-1 number-2 number-3 add"
+    "number-0 dot equal equal";
+}
+button{
+    text-align: center;
+}
+#number-1{
+    grid-area: number-1;    
+}
+#number-2{
+    grid-area: number-2;
+}
+#number-3{
+    grid-area: number-3;
+}
+#number-4{
+    grid-area: number-4;
+}
+#number-5{
+    grid-area: number-5;
+}
+#number-6{
+    grid-area: number-6;
+}
+#number-7{
+    grid-area: number-7;
+}
+#number-8{
+    grid-area: number-8;
+}
+#number-9{
+    grid-area: number-9;
+}
+#number-0{
+    grid-area: number-0;
+}
+#add{
+    grid-area: add;
+}
+#sub{
+    grid-area: sub;
+}
+#mult{
+    grid-area: mult;
+}
+#div{
+    grid-area: div;
+}
+#clear{
+    grid-area: clear;
+}
+#del{
+    grid-area: del;
+}
+#equal{
+    grid-area:equal;
+}
+#dot{
+    grid-area: dot;
+}
