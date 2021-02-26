@@ -1,3 +1,10 @@
+const display = document.querySelector("#display-value");
+let displayValue = "";
+let operation = "";
+let firstNumber = 0;
+let secondNumber = "";
+let afterOperator = false;
+
 function Add(a,b){
     return a+b;
 }
@@ -8,6 +15,9 @@ function Multiply(a,b){
     return a*b;
 }
 function Divide(a,b){
+    if(b===0){
+        return "LMAO";
+    }
     return a/b;
 }
 
@@ -26,9 +36,16 @@ function Operate(operator,a,b){
         case "div":
             result = Divide(a,b);
             break;
+        default:
+            result = a;
     }
     //if(result%1 !==0){
-    ChangeDisplay(parseFloat(result.toFixed(2)).toString());
+    if(IsNumber(result)){
+        ChangeDisplay(parseFloat(result.toFixed(2)).toString());        
+    }
+    else{
+        ChangeDisplay(result);
+    }
     //}
     //else{
        // ChangeDisplay(result);
@@ -37,20 +54,17 @@ function Operate(operator,a,b){
     secondNumber = 0;
     operation = 0;
 }
-const display = document.querySelector("#display-value");
-let displayValue = "";
-let operation = "";
-let firstNumber = "";
-let secondNumber = "";
-let afterOperator = false;
 
 function AssignNumber(value){
-    if(!firstNumber){
+    if(afterOperator || (IsNumber(firstNumber) &&firstNumber!==0)){
+        secondNumber = ConvertToNumber(value);
+    }else{
         firstNumber = ConvertToNumber(value);
     }
-    else{
-        secondNumber = ConvertToNumber(value);
-    }
+}
+function InitializeOperation(){
+    AssignNumber(displayValue);
+    Operate(operation,firstNumber,secondNumber);
 }
 function ConvertToNumber(value){
     if(value.includes(".")){
@@ -59,6 +73,12 @@ function ConvertToNumber(value){
     else{
         return parseInt(value);
     }
+}
+function IsNumber(value){
+    if(isNaN(value)){    
+        return false;
+    }
+    return true;
 }
 
 function ChangeDisplay(value){
@@ -71,7 +91,9 @@ function ClearDisplay(){
 const buttons = document.querySelectorAll("button");
 buttons.forEach(element => {
     element.addEventListener("click",() => {
-        if(element.id !== "equal" && element.id !== "clear" && element.id !== "del"){
+        //check if not special buttons
+        if(!element.classList.contains("additional") && element.id !== "equal"){
+            //input numbers and dot only here
             if(!element.classList.contains("operator")){
                 if(afterOperator){
                     displayValue = "";
@@ -83,37 +105,60 @@ buttons.forEach(element => {
                 displayValue += element.value;
                 ChangeDisplay(displayValue);
             }
+            //input operators only here
             else{
-                //check what kind of operator it is and give it to Operate function with the first number
-                switch(element.id){
-                    case "add":
-                        operation = element.id;
-                        AssignNumber(displayValue);
-                        afterOperator = true;
-                        break;
-                    case "sub":
-                        operation = element.id;
-                        AssignNumber(displayValue);
-                        afterOperator = true;
-                        break;
-                    case "mult":
-                        operation = element.id;
-                        AssignNumber(displayValue);
-                        afterOperator = true;
-                        break;
-                    case "div":
-                        operation = element.id;
-                        AssignNumber(displayValue);
-                        afterOperator = true;
-                        break;
+                //change operator when clicking operator buttons after it has already been pressed
+                if(afterOperator){
+                    switch(element.id){
+                        case "add":
+                            operation = element.id;
+                            afterOperator = true;
+                            break;
+                        case "sub":
+                            operation = element.id;
+                            afterOperator = true;
+                            break;
+                        case "mult":
+                            operation = element.id;
+                            afterOperator = true;
+                            break;
+                        case "div":
+                            operation = element.id;
+                            afterOperator = true;
+                            break;
+                    }
+                }
+                else{
+                    //check what kind of operator it is and give it to Operate function with the first number
+                    switch(element.id){
+                        case "add":
+                            InitializeOperation();
+                            operation = element.id;
+                            afterOperator = true;
+                            break;
+                        case "sub":
+                            InitializeOperation();
+                            operation = element.id;
+                            afterOperator = true;
+                            break;
+                        case "mult":
+                            InitializeOperation();
+                            operation = element.id;
+                            afterOperator = true;
+                            break;
+                        case "div":
+                            InitializeOperation();
+                            operation = element.id;
+                            afterOperator = true;
+                            break;
+                    }
                 }
             }
         }
         else{
             //do stuff for equal clear etc.
             if(element.id === "equal"){
-                AssignNumber(displayValue);
-                Operate(operation,firstNumber,secondNumber);
+                InitializeOperation();
                 afterOperator = true;
             }
             if(element.id === "clear"){
