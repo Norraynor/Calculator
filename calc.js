@@ -164,9 +164,17 @@ buttons.forEach(element => {
             if(element.id === "clear"){
                 ClearAll();
             }
+            if(element.id === "del"){
+                DeleteOneNumber();
+                ChangeDisplay(displayValue);
+            }
         }
     })
 });
+
+function DeleteOneNumber(){
+        displayValue = displayValue.slice(0,-1);    
+}
 
 function ClearAll(){
     ClearDisplay();
@@ -175,3 +183,23 @@ function ClearAll(){
     operation = "";
     displayValue = "";
 }
+
+///
+/// need to figure this part out about keycodes
+///
+window.addEventListener("keydown", function(event) {
+    if (event.defaultPrevented) {
+      return; // Do nothing if event already handled
+    }
+  
+    switch(event.code) {
+      case "Digit0":
+      case "ArrowDown":
+          //assign 0 to display value
+        break;
+      
+    }
+  
+    // Consume the event so it doesn't get handled twice
+    event.preventDefault();
+  });
