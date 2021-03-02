@@ -103,6 +103,13 @@ buttons.forEach(element => {
                 if(element.id === "dot" && !displayValue.includes(".")){
                     displayValue += ".";
                 }
+                if(displayValue === "0"){
+                    if(element.id==="number-0"){
+                        return;
+                    }else{
+                        ClearDisplay();
+                    }
+                }
                 displayValue += element.value;
                 ChangeDisplay(displayValue);
             }
