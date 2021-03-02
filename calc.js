@@ -85,7 +85,8 @@ function ChangeDisplay(value){
     display.textContent = value;
 }
 function ClearDisplay(){
-    ChangeDisplay("");
+    displayValue = "";
+    ChangeDisplay(displayValue);
 }
 
 const buttons = document.querySelectorAll("button");
@@ -96,7 +97,7 @@ buttons.forEach(element => {
             //input numbers and dot only here
             if(!element.classList.contains("operator")){
                 if(afterOperator){
-                    displayValue = "";
+                    ClearDisplay();
                     afterOperator = false;
                 }
                 if(element.id === "dot" && !displayValue.includes(".")){
@@ -181,12 +182,12 @@ function ClearAll(){
     firstNumber = 0;
     secondNumber = 0;
     operation = "";
-    displayValue = "";
 }
 
 ///
 /// need to figure this part out about keycodes
 ///
+/*
 window.addEventListener("keydown", function(event) {
     if (event.defaultPrevented) {
       return; // Do nothing if event already handled
@@ -203,3 +204,87 @@ window.addEventListener("keydown", function(event) {
     // Consume the event so it doesn't get handled twice
     event.preventDefault();
   });
+
+  // Make sure this code gets executed after the DOM is loaded.
+document.querySelector("#addLinks").addEventListener("keyup", event => {
+    if(event.key !== "Enter") return; // Use `.key` instead.
+    document.querySelector("#linkadd").click(); // Things you want to do.
+    event.preventDefault(); // No need to `return false;`.
+});*/
+
+function InputButton(e) {
+    const buttonArray =  Array.from(buttons);
+    console.log(e.code);
+
+    switch(e.code){
+        case "Delete":
+            buttonArray.find(button => button.id ==="clear").click();
+            break;
+        case "Backspace":
+            buttonArray.find(button => button.id ==="del").click();
+            break;
+        case "Numpad0":
+        case "Digit0":
+            buttonArray.find(button => button.id ==="number-0").click();
+            break;
+        case "Numpad1":
+        case "Digit1":
+            buttonArray.find(button => button.id ==="number-1").click();
+            break;
+        case "Numpad2":
+        case "Digit2":
+            buttonArray.find(button => button.id ==="number-2").click();
+            break;
+        case "Numpad3":
+        case "Digit3":
+            buttonArray.find(button => button.id ==="number-3").click();
+            break;
+        case "Numpad4":
+        case "Digit4":
+            buttonArray.find(button => button.id ==="number-4").click();
+            break;
+        case "Numpad5":
+        case "Digit5":
+            buttonArray.find(button => button.id ==="number-5").click();
+            break;
+        case "Numpad6":
+        case "Digit6":
+            buttonArray.find(button => button.id ==="number-6").click();
+            break;
+        case "Numpad7":
+        case "Digit7":
+            buttonArray.find(button => button.id ==="number-7").click();
+            break;
+        case "Numpad8":
+        case "Digit8":
+            buttonArray.find(button => button.id ==="number-8").click();
+            break;
+        case "Numpad9":
+        case "Digit9":
+            buttonArray.find(button => button.id ==="number-9").click();
+            break;
+        case "NumpadAdd":
+            buttonArray.find(button => button.id ==="add").click();
+            break;
+        case "NumpadSubtract":
+            buttonArray.find(button => button.id ==="sub").click();
+            break;
+        case "NumpadMultiply":
+            buttonArray.find(button => button.id ==="mult").click();
+            break;
+        case "NumpadDivide":
+            buttonArray.find(button => button.id ==="div").click();
+            break;
+        
+        case "Enter":
+        case "NumpadEnter":
+            buttonArray.find(button => button.id ==="equal").click();
+            break;
+        case "NumpadDecimal":
+        case "Period":
+        case "Comma":
+            buttonArray.find(button => button.id ==="dot").click();
+            break;
+    }
+  }
+window.addEventListener('keydown', InputButton);
