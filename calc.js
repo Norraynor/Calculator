@@ -4,6 +4,7 @@ let operation = "";
 let firstNumber = 0;
 let secondNumber = "";
 let afterOperator = false;
+let afterResult = false;
 
 function Add(a,b){
     return a+b;
@@ -96,6 +97,11 @@ buttons.forEach(element => {
         if(!element.classList.contains("additional") && element.id !== "equal"){
             //input numbers and dot only here
             if(!element.classList.contains("operator")){
+                if(afterResult){
+                    ClearAll();
+                    afterOperator=false;
+                    afterResult=false;
+                }
                 if(afterOperator){
                     ClearDisplay();
                     afterOperator = false;
@@ -117,24 +123,51 @@ buttons.forEach(element => {
             else{
                 //change operator when clicking operator buttons after it has already been pressed
                 if(afterOperator){
-                    switch(element.id){
-                        case "add":
-                            operation = element.id;
-                            afterOperator = true;
-                            break;
-                        case "sub":
-                            operation = element.id;
-                            afterOperator = true;
-                            break;
-                        case "mult":
-                            operation = element.id;
-                            afterOperator = true;
-                            break;
-                        case "div":
-                            operation = element.id;
-                            afterOperator = true;
-                            break;
+                    if(!afterResult){
+                        switch(element.id){
+                            case "add":
+                                operation = element.id;
+                                afterOperator = true;
+                                break;
+                            case "sub":
+                                operation = element.id;
+                                afterOperator = true;
+                                break;
+                            case "mult":
+                                operation = element.id;
+                                afterOperator = true;
+                                break;
+                            case "div":
+                                operation = element.id;
+                                afterOperator = true;
+                                break;
+                        }
+                    }else{
+                        switch(element.id){
+                            case "add":
+                                operation = element.id;
+                                afterOperator = true;
+                                afterResult = false;
+                                break;
+                            case "sub":
+                                operation = element.id;
+                                afterOperator = true;
+                                afterResult = false;
+                                break;
+                            case "mult":
+                                operation = element.id;
+                                afterOperator = true;
+                                afterResult = false;
+                                break;
+                            case "div":
+                                operation = element.id;
+                                afterOperator = true;
+                                afterResult = false;
+                                break;
                     }
+
+                    }
+                    
                 }
                 else{
                     //check what kind of operator it is and give it to Operate function with the first number
@@ -168,6 +201,7 @@ buttons.forEach(element => {
             if(element.id === "equal"){
                 InitializeOperation();
                 afterOperator = true;
+                afterResult = true;
             }
             if(element.id === "clear"){
                 ClearAll();
